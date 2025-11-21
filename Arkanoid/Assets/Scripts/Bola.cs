@@ -6,9 +6,11 @@ using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 public class Bola : MonoBehaviour
 {
     private float speed = 8f;
-    private bool jugando = false;
+    public bool Jugando = false;
     private Rigidbody2D rb;
     private Transform pala;
+
+
 
     void Start()
     {
@@ -16,23 +18,42 @@ public class Bola : MonoBehaviour
         pala = GameObject.FindWithTag("Pala").transform;
         rb.isKinematic = true; 
     }
+
     void Update()
     {
 
-        if (!jugando)
+        if (!Jugando)
         {
             Vector3 palaPos = pala.position;
             transform.position = new Vector3(palaPos.x, palaPos.y + 0.5f, 0f);
-
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                jugando = true;
-                rb.isKinematic = false;
-                LanzarBola();
-            }
         }
     }
+
+    public void PosicionarSobrePala(Vector3 palaPos)
+    {
+        rb.isKinematic = true;
+        transform.position = new Vector3(palaPos.x, palaPos.y + 0.5f, 0f);
+        Jugando = false;
+    }
+
+
+    public void Lanzar(Vector3 targetPos)
+    {
+        rb.isKinematic = false;
+
+        Vector2 direccion = (targetPos - transform.position).normalized;
+
+        float minY = 0.3f;
+        if (direccion.y < minY)
+        {
+            direccion.y = minY;
+            direccion = direccion.normalized;
+        }
+
+        rb.velocity = direccion * speed;
+        Jugando = true;
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
 
@@ -41,21 +62,33 @@ public class Bola : MonoBehaviour
             Vector2 direccion = new Vector2(CalcularDireccionX(collision.transform), 1f).normalized;
             rb.velocity = direccion * speed;
         }
+
+
+        Vector2 vel = rb.velocity;
+
+        if (Mathf.Abs(vel.y) < 0.1f)
+        {
+            vel.y = 0.1f * Mathf.Sign(vel.y == 0 ? 1 : vel.y);
+            rb.velocity = vel.normalized * speed;
+        }
+
+        vel.x += Random.Range(-0.05f, 0.05f);
+        vel.y += -0.05f;
+        rb.velocity = vel.normalized * speed;
     }
+
     private float CalcularDireccionX(Transform palaTransform)
     {
         float diferenciaX = transform.position.x - palaTransform.position.x;
         float mitadAnchoPala = palaTransform.localScale.x / 2;
         return diferenciaX / mitadAnchoPala;
     }
-    private void LanzarBola()
+
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        Vector2 direccion = new Vector2(Random.Range(-0.5f, 0.5f), 1f).normalized;
-        rb.velocity = direccion * speed;
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        jugando = false;
+
+        Jugando = false;
+        GameManager.Instance.BolaManager.AgregarBola(this);
     }
 
 }

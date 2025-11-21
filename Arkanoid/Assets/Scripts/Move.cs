@@ -7,7 +7,7 @@ public class Move : MonoBehaviour
     private Transform ParedDerecha;
     private Transform ParedIzquierda;
     private float speed = 10f;         
-    private float minX, maxX;           
+    private float minX, maxX;      
 
     void Awake()
     {
@@ -24,7 +24,12 @@ public class Move : MonoBehaviour
         position.x += horizontal * speed * Time.deltaTime;
         position.x = Mathf.Clamp(position.x, minX, maxX);
         transform.position = position;
+
+
+ 
+      
     }
+   
      private void UpdateLimits()
     {
         float MitadAnchoPala= transform.localScale.x/2;

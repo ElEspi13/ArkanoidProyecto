@@ -7,11 +7,15 @@ TagManager:
   - Derecha
   - Izquierda
   - Pala
+  - EnemigoEspecial
+  - Enemigo
+  - ZonaDestruccion
+  - ZonaDestruccionEnemigo
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ball
   - Water
   - UI
   - 
