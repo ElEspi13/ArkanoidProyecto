@@ -7,6 +7,9 @@ public class BolaManager : MonoBehaviour
     public LineRenderer lineRenderer;
     public List<Bola> bolasEnPala = new List<Bola>();
 
+    /// <summary>
+    /// Actualiza el puntero y maneja el lanzamiento de bolas desde la pala para que sea de uno en uno.
+    /// </summary>
     void Update()
     {
         UpdatePointer();
@@ -30,6 +33,10 @@ public class BolaManager : MonoBehaviour
             bolasEnPala.RemoveAt(0); 
         }
     }
+
+    /// <summary>
+    /// Controla la posición del puntero basado en la posición del ratón.
+    /// </summary>
     private void UpdatePointer()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -53,7 +60,10 @@ public class BolaManager : MonoBehaviour
         lineRenderer.SetPosition(1, endPos);
     }
 
-
+    /// <summary>
+    /// Añade una bola a la lista de bolas en la pala si no está ya presente. el 
+    /// </summary>
+    /// <param name="b"></param>
     public void AgregarBola(Bola b)
     {
         if (!bolasEnPala.Contains(b))

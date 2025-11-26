@@ -36,7 +36,10 @@ public class Bola : MonoBehaviour
         Jugando = false;
     }
 
-
+    /// <summary>
+    /// Lanzamiento de bola hacia una posición objetivo
+    /// </summary>
+    /// <param name="targetPos"></param>
     public void Lanzar(Vector3 targetPos)
     {
         rb.isKinematic = false;
@@ -54,6 +57,10 @@ public class Bola : MonoBehaviour
         Jugando = true;
     }
 
+    /// <summary>
+    /// Control de la colisión con la pala para ajustar la dirección
+    /// </summary>
+    /// <param name="collision"></param>
     void OnCollisionEnter2D(Collision2D collision)
     {
 
@@ -66,17 +73,18 @@ public class Bola : MonoBehaviour
 
         Vector2 vel = rb.velocity;
 
-        if (Mathf.Abs(vel.y) < 0.1f)
-        {
-            vel.y = 0.1f * Mathf.Sign(vel.y == 0 ? 1 : vel.y);
-            rb.velocity = vel.normalized * speed;
-        }
+        
 
         vel.x += Random.Range(-0.05f, 0.05f);
         vel.y += -0.05f;
         rb.velocity = vel.normalized * speed;
     }
 
+    /// <summary>
+    /// Calcula la dirección X en función de la posición de la bola y la pala
+    /// </summary>
+    /// <param name="palaTransform"></param>
+    /// <returns></returns>
     private float CalcularDireccionX(Transform palaTransform)
     {
         float diferenciaX = transform.position.x - palaTransform.position.x;
@@ -84,6 +92,10 @@ public class Bola : MonoBehaviour
         return diferenciaX / mitadAnchoPala;
     }
 
+    /// <summary>
+    /// Evento de colisión con el área de muerte que devuelve la bola al GameManager
+    /// </summary>
+    /// <param name="collision"></param>
     void OnTriggerEnter2D(Collider2D collision)
     {
 

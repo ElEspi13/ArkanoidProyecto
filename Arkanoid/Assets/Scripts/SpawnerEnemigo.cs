@@ -13,7 +13,11 @@ public class SpawnerEnemigo : MonoBehaviour
     private int contadorOleadas = 0;
     private float velocidadEnemigo = 0.3f;
     private int vidaEnemigo = 0;
-   
+
+    /// <summary>
+    /// Controla el temporizador y genera una nueva oleada cuando el intervalo se cumple.
+    /// Una oleada consiste en un patrón de enemigos instanciado en los puntos de spawn.
+    /// </summary>
     void Update()
     {
         contador+= Time.deltaTime;
@@ -23,13 +27,18 @@ public class SpawnerEnemigo : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Este metodo elige un patrón de spawn aleatorio y genera una oleada de enemigos en puntos especificos.
+    /// Aumenta la dificultad cada cierto número de oleadas.
+    /// </summary>
     private void SpawnOleada()
     {
         int pattern = UnityEngine.Random.Range(0, 4);
 
-        if (contadorOleadas % 20 == 0)
+        if (contadorOleadas % 10 == 0)
         {
-            vidaEnemigo++; 
+            vidaEnemigo++;
+            GameManager.Instance.AumentarBolas();
             Debug.Log("Vida de los enemigos aumentada a: " + vidaEnemigo);
         }
         switch (pattern)
@@ -49,6 +58,9 @@ public class SpawnerEnemigo : MonoBehaviour
         }
         contadorOleadas++;
     }
+
+    //Metodos de patrones de spawn
+    #region
     private void SpawnRow()
     {
         foreach (var punto in puntosDeSpawn)
@@ -86,11 +98,32 @@ public class SpawnerEnemigo : MonoBehaviour
                 SpawnEnemigo(punto);
         contador = 0;
     }
+    #endregion
 
+    /// <summary>
+    /// Controla la creación de enemigos en patrones predefinidos..
+    /// Los enemigos se generan desde los puntos configurados en la escena.
+    /// </summary>
+    /// <param name="point"></param>
     private void SpawnEnemigo(Transform point)
     {
-        GameObject prefab = (UnityEngine.Random.value < 0.05f) ? EnemigoPrefab[1] : EnemigoPrefab[0];
+        GameObject prefab;
+
+        float rand = UnityEngine.Random.value; 
+
+        if (rand < 0.95f)
+        {
+
+            prefab = EnemigoPrefab[0];
+        }
+        else
+        {
+            int indexRaro = UnityEngine.Random.Range(1, EnemigoPrefab.Length); 
+            prefab = EnemigoPrefab[indexRaro];
+        }
+
         GameObject enemigo = Instantiate(prefab, point.position, Quaternion.identity);
         enemigo.GetComponent<Enemigo>().Init(velocidadEnemigo, vidaEnemigo);
     }
+
 }

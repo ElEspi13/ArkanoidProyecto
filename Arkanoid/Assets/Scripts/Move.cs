@@ -16,6 +16,9 @@ public class Move : MonoBehaviour
         UpdateLimits();
         
     }
+    /// <summary>
+    /// Actualiza la posición de la pala según la entrada del usuario y limita su movimiento dentro de los bordes definidos.
+    /// </summary>
     void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
@@ -29,8 +32,11 @@ public class Move : MonoBehaviour
  
       
     }
-   
-     private void UpdateLimits()
+
+    /// <summary>
+    /// Actualiza los límites de movimiento de la pala según la posición de las paredes
+    /// </summary>
+    private void UpdateLimits()
     {
         float MitadAnchoPala= transform.localScale.x/2;
         float MitadAnchoParedDerecha= ParedDerecha.transform.localScale.x/2;
