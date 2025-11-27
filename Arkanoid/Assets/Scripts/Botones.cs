@@ -9,7 +9,6 @@ public class Botones : MonoBehaviour
     #region
     public void OnClick_BotonJugar()
     {
-        Debug.LogError("CLICK DETECTADO!");
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("Juego");
     }

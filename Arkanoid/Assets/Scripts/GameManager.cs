@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     /// Contador del tiempo transcurrido
     /// </summary>
     [Header("Timer")]
-    private float timeElapsed = 0f;
+    private float tiempo = 0f;
     public bool TimerActive = true;
     public TextMeshProUGUI TimerText;
 
@@ -100,8 +100,8 @@ public class GameManager : MonoBehaviour
     {
         if (!TimerActive) return;
 
-        timeElapsed += Time.deltaTime;
-        TimerText.text = FormatTime(timeElapsed);
+        tiempo += Time.deltaTime;
+        TimerText.text = FormatTime(tiempo);
     }
     /// <summary>
     /// Formatea el tiempo en minutos y segundos

@@ -5,7 +5,7 @@ using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class Bola : MonoBehaviour
 {
-    private float speed = 8f;
+    private float velocidad = 8f;
     public bool Jugando = false;
     private Rigidbody2D rb;
     private Transform pala;
@@ -53,7 +53,7 @@ public class Bola : MonoBehaviour
             direccion = direccion.normalized;
         }
 
-        rb.velocity = direccion * speed;
+        rb.velocity = direccion * velocidad;
         Jugando = true;
     }
 
@@ -67,7 +67,7 @@ public class Bola : MonoBehaviour
         if (collision.gameObject.CompareTag("Pala"))
         {
             Vector2 direccion = new Vector2(CalcularDireccionX(collision.transform), 1f).normalized;
-            rb.velocity = direccion * speed;
+            rb.velocity = direccion * velocidad;
         }
 
 
@@ -77,7 +77,7 @@ public class Bola : MonoBehaviour
 
         vel.x += Random.Range(-0.05f, 0.05f);
         vel.y += -0.05f;
-        rb.velocity = vel.normalized * speed;
+        rb.velocity = vel.normalized * velocidad;
     }
 
     /// <summary>
@@ -93,7 +93,7 @@ public class Bola : MonoBehaviour
     }
 
     /// <summary>
-    /// Evento de colisión con el área de muerte que devuelve la bola al GameManager
+    /// Evento de colisión con el área de muerte que devuelve la bola al BolaManager
     /// </summary>
     /// <param name="collision"></param>
     void OnTriggerEnter2D(Collider2D collision)

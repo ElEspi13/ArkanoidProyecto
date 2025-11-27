@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemigo : MonoBehaviour
 {
-    private float speed=0.3f;
+    private float velocidad=0.3f;
     private int vida ;
     private bool isSpecial;
     public GameObject PowerUpPrefab;
@@ -16,7 +16,7 @@ public class Enemigo : MonoBehaviour
     /// <param name="vida"></param>
     public void Init(float speed, int vida)
     {
-        this.speed = speed;
+        this.velocidad = speed;
         this.vida = vida;
         isSpecial = CompareTag("EnemigoEspecial");
     }
@@ -26,7 +26,7 @@ public class Enemigo : MonoBehaviour
     /// </summary>
     void Update()
     {
-        transform.Translate(Vector2.down * speed * Time.deltaTime);
+        transform.Translate(Vector2.down * velocidad * Time.deltaTime);
     }
 
     /// <summary>

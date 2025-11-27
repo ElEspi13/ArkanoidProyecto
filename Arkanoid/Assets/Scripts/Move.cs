@@ -6,9 +6,12 @@ public class Move : MonoBehaviour
 {
     private Transform ParedDerecha;
     private Transform ParedIzquierda;
-    private float speed = 10f;         
-    private float minX, maxX;      
+    private float velocidad = 10f;         
+    private float minX, maxX;
 
+    /// <summary>
+    /// Asigna las referencias a las paredes y actualiza los límites de movimiento al iniciar el juego.
+    /// </summary>
     void Awake()
     {
         ParedDerecha = GameObject.FindWithTag("Derecha").transform;
@@ -24,7 +27,7 @@ public class Move : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
 
         Vector3 position = transform.position;
-        position.x += horizontal * speed * Time.deltaTime;
+        position.x += horizontal * velocidad * Time.deltaTime;
         position.x = Mathf.Clamp(position.x, minX, maxX);
         transform.position = position;
 
